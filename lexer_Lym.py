@@ -24,32 +24,44 @@
 # [KEYWORD("int"), ID("score"), OP_ASSIGN:("="), INTEGER("10"), SEMICOLON(";")]
 
 DVARIA="|"
+LBLOQUE="["
+RBLOQUE="]"
 
 def lexer(nombreArchivo):
     archivo = open (nombreArchivo , 'r' )
+    
     lineas=archivo.readlines() # Devuelvele una lista con todas las lineas de que tiene el archivo
-    tokens=[]
-    palabra=""
-    contenido=[]
+    
+    tokens=[] # Es la lista temporal en la cual se guardan los casos del lenguaje: PROC, VARIABLES, BLOQUES
+    
+    palabra="" # Se guardan las palabras necesarias para cada caso 
+    
+    listaTotal=[] # Indica una lista de listas que incluye cada caso donde existe un proceso principal
 
-    for linea in lineas:
-        for caracter in linea:
+    for linea in lineas: # Recorre cada linea del archivo
+
+        for caracter in linea: # Revisar cada caracter en una linea
+
+            # Primer caso declaración de variables
+
             if caracter in DVARIA:
                 if palabra:
                     tokens.append(palabra)
                     palabra=""
                 tokens.append(caracter)
-                contenido.append(caracter)
+                listaTotal.append(caracter) # Quitar para no agregar una variable en especifico
             elif caracter.isspace():
                 if palabra!= "":
+                    print("PALABRAS: ",palabra)
                     tokens.append(palabra)
+
                     palabra=""
             else: palabra+=caracter
-        contenido.append(tokens)
+        listaTotal.append(tokens)
 
     print("TOKENS: ",tokens)
     print("PALABRAS: ",palabra)
-    print("CONTENIDO: ",contenido)
+    print("CONTENIDO: ",listaTotal)
     archivo.close()
 
 lexer("pruebaVariables.txt")
