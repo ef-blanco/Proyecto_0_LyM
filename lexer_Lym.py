@@ -47,9 +47,9 @@ def lexer(nombreArchivo):
             else: palabra+=caracter
         contenido.append(tokens)
 
-    print(tokens)
-    print(palabra)
-    print(contenido)
+    print("TOKENS: ",tokens)
+    print("PALABRAS: ",palabra)
+    print("CONTENIDO: ",contenido)
     archivo.close()
 
 lexer("pruebaVariables.txt")
