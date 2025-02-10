@@ -1,0 +1,7 @@
+| nom x y one |
+
+proc putChips : n andBalloons : m [
+    |c , b |
+    c := n .
+    b := m .
+    put : c ofType : # chips . put : b ofType : # balloons ]
