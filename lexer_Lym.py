@@ -26,6 +26,7 @@
 DVARIA="|"
 LBLOQUE="["
 RBLOQUE="]"
+PROC="proc"
 
 def lexer(nombreArchivo):
     archivo = open (nombreArchivo , 'r' )
@@ -37,34 +38,52 @@ def lexer(nombreArchivo):
     palabra="" # Se guardan las palabras necesarias para cada caso 
     
     listaTotal=[] # Indica una lista de listas que incluye cada caso donde existe un proceso principal
+    
+    anteriorVar=False # Indica si ya hay una decalración de variables antes
 
     for linea in lineas: # Recorre cada linea del archivo
 
         for caracter in linea: # Revisar cada caracter en una linea
 
             # Primer caso declaración de variables
-
             if caracter in DVARIA:
                 if palabra:
                     tokens.append(palabra)
                     palabra=""
-                tokens.append(caracter)
-                listaTotal.append(caracter) # Quitar para no agregar una variable en especifico
+
+                if anteriorVar==False:
+                    if len(tokens)>0:
+                        listaTotal.append(tokens)
+                        tokens=[]
+                    if len(tokens)==0:
+                        tokens.append(caracter)
+                        anteriorVar=True
+
+                elif anteriorVar==True:
+                    tokens.append(caracter)
+                    listaTotal.append(tokens)
+                    anteriorVar=False
+                    tokens=[]
+
+                
+
+
+            # Caso para espacios
             elif caracter.isspace():
                 if palabra!= "":
                     print("PALABRAS: ",palabra)
                     tokens.append(palabra)
-
                     palabra=""
+
             else: palabra+=caracter
-        listaTotal.append(tokens)
+        
 
     print("TOKENS: ",tokens)
     print("PALABRAS: ",palabra)
     print("CONTENIDO: ",listaTotal)
     archivo.close()
 
-lexer("pruebaVariables.txt")
+lexer("prueba.txt")
 
 
     # Mover linea: ALT + FLECHA

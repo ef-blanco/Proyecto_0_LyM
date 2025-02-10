@@ -1,7 +1,10 @@
 | nom x y one |
+| nom z w one |
+| sum a b alo |
 
 proc putChips : n andBalloons : m [
     |c , b |
     c := n .
     b := m .
     put : c ofType : # chips . put : b ofType : # balloons ]
+| nom d c one |
