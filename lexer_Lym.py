@@ -116,7 +116,7 @@ def lexer(nombreArchivo):
             nuevalista.extend(listaTotal[j])
             j+=1
         
-        listaTotal.append(nuevalista)
+        listaTotal.insert(i,nuevalista) #Inserta en la lista el procedimiento en la pos de la linea en la que se empezo
         
     for elem in elementos_borrar:
         listaTotal.remove(elem)
