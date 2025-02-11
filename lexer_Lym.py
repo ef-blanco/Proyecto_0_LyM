@@ -95,6 +95,26 @@ def lexer(nombreArchivo):
     
     #modificiones
     
+    #Se unen los ']' que estan solos en una linea a la linea anterior
+    
+    listas_con_solo_corcheteR = []
+    for lista in listaTotal:
+        if (len(lista) == 1)and(lista[0]=="]"):
+            listas_con_solo_corcheteR.append(listaTotal.index(lista))
+            
+    elementos_borrar = [] #Esta lista indica que elementos se eliminaran luego de juntar todos los ']' solos con su linea anterior
+    
+    for i in listas_con_solo_corcheteR:
+        nueva_lista = listaTotal[i-1][:] #Se copia toda la lista anterior al ']' en nueva_lista
+        nueva_lista.extend(listaTotal[i]) #Se le añade a la lista el ']'
+        elementos_borrar.append(listaTotal[i])
+        elementos_borrar.append(listaTotal[i-1])
+        listaTotal.insert(i-1,nueva_lista) #Se añade la nueva lista a la posicion donde estaba la linea antes del ']'
+    
+    for elem in elementos_borrar: #Se eliminan las listas que fueron juntadas con otras
+        listaTotal.remove(elem)
+    
+    #Se unen todas las lineas que conforman un procedimiento
     listas_con_proc = [] #Esta lista contendra la posicion de las lista con 'proc'
     for lista in listaTotal:
         if 'proc' in lista:
@@ -118,8 +138,28 @@ def lexer(nombreArchivo):
         
         listaTotal.insert(i,nuevalista) #Inserta en la lista el procedimiento en la pos de la linea en la que se empezo
         
-    for elem in elementos_borrar:
+    for elem in elementos_borrar: #Se eliminan las listas que fueron juntadas con otras
         listaTotal.remove(elem)
+        
+    #Se unen los '[' que se encuentran solo en una linea a la linea siguiente
+    
+    listas_con_solo_corcheteL = []
+    for lista in listaTotal:
+        if (len(lista) == 1)and(lista[0]=="["):
+            listas_con_solo_corcheteR.append(listaTotal.index(lista))
+            
+    elementos_borrar = [] #Esta lista indica que elementos se eliminaran luego de juntar todos los '[' solos con su linea siguiente
+    
+    for i in listas_con_solo_corcheteL:
+        nueva_lista = listaTotal[i][:] #Se copia el '[' en nueva_lista
+        nueva_lista.extend(listaTotal[i+1]) #Se le añade a la lista lo que estaba en la linea siguiente
+        elementos_borrar.append(listaTotal[i])
+        elementos_borrar.append(listaTotal[i+1])
+        listaTotal.insert(i,nueva_lista) #Se añade la nueva lista a la posicion donde estaba la linea antes del ']'
+    
+    for elem in elementos_borrar: #Se eliminan las listas que fueron juntadas con otras
+        listaTotal.remove(elem)
+    
     
     print("CONTENIDO: ",listaTotal)        
     

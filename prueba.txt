@@ -8,3 +8,8 @@ proc putChips : n andBalloons : m [
     b := m .
     put : c ofType : # chips . put : b ofType : # balloons ]
 | nom d c one |
+
+proc goNorth [
+while : canMove : 1 inDir : # north do : [ move : 1 InDir : # north .
+]
+]
