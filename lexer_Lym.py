@@ -1,4 +1,4 @@
-# Alejandro Hoyos - Proyecto 0 - Lexer para Robot
+# Alejandro Hoyos y Emmanuel Blanco - Proyecto 0 - Lexer para Robot
 
 # Debemos decir si el programa corresponde al lenguaje del robot o no
 
@@ -40,7 +40,17 @@ def lexer(nombreArchivo):
     listaTotal=[] # Indica una lista de listas que incluye cada caso donde existe un proceso principal
     
     anteriorVar=False # Indica si ya hay una decalración de variables antes
-
+    
+    #modificaciones
+    
+    definicion_var = [] #Esta lista contendra las lista que contengan el caracter '|', que seran los casos vinculados a la declaracion de variables
+    
+    procedimientos = [] #Esta lista contendra las listas que contengan el string 'proc', que seran los casos de procedimientos
+    
+    bloques = [] #Esta lista contendra las listas que contengan los carateres '['']' y que no contengan los caracteres de los otros casos
+    
+    #modificaciones
+    
     for linea in lineas: # Recorre cada linea del archivo
 
         for caracter in linea: # Revisar cada caracter en una linea
@@ -82,6 +92,44 @@ def lexer(nombreArchivo):
     print("PALABRAS: ",palabra)
     print("CONTENIDO: ",listaTotal)
     archivo.close()
+    
+    #modificiones
+    
+    listas_con_proc = [] #Esta lista contendra la posicion de las lista con 'proc'
+    for lista in listaTotal:
+        if 'proc' in lista:
+            listas_con_proc.append(listaTotal.index(lista))
+    
+    elementos_borrar = [] #Esta lista indica que elementos se eliminaran luego de juntar todas las lineas de un procedimiento
+    
+    for i in listas_con_proc:
+        j = i
+        corchete_detectado = False
+        nuevalista = []
+        
+        while (j<len(listaTotal))and(not corchete_detectado):
+            
+            if ']' in listaTotal[j]: #Este ciclo junta todas las listas que hacen parte de un solo procedimiento
+                corchete_detectado = True #Aun es necesario incluir el caso en el que hay subbloques dentro de un proc, el ciclo se detendría al ver el primer ']'
+                
+            elementos_borrar.append(listaTotal[j])
+            nuevalista.extend(listaTotal[j])
+            j+=1
+        
+        listaTotal.append(nuevalista)
+        
+    for elem in elementos_borrar:
+        listaTotal.remove(elem)
+            
+     
+    #print("DEF_VAR: ",definicion_var)
+    #print("PROCS: ",procedimientos)
+    #print("BLOQUES: ",bloques)
+    
+    print("CONTENIDO: ",listaTotal)
+    
+    #modificaciones     
+            
 
 lexer("prueba.txt")
 
