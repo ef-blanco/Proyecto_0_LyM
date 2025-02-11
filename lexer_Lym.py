@@ -120,7 +120,8 @@ def lexer(nombreArchivo):
         
     for elem in elementos_borrar:
         listaTotal.remove(elem)
-            
+    
+    print("CONTENIDO: ",listaTotal)        
     
     for lista in listaTotal:
         if 'proc' in lista:
@@ -128,11 +129,12 @@ def lexer(nombreArchivo):
         elif '|' in lista:
             definicion_var.append(lista)
     
+    
     print("DEF_VAR: ",definicion_var)
     print("PROCS: ",procedimientos)
     #print("BLOQUES: ",bloques)
     
-    print("CONTENIDO: ",listaTotal)
+    
     
     #modificaciones     
             
