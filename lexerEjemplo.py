@@ -6,30 +6,12 @@ def lexer(input_string):
     
     tokens = []
     palabra = ''
-    pila = []
 
     for char in input_string:
         # TOKENS PARENTESIS
-        if char == '[':
-            if palabra:
-                tokens.append(palabra)
-                palabra = ''
-            pila.append(tokens)
-            tokens = []
-            tokens.append(LPAREN) 
-        elif char == ']':
-            if palabra:
-                tokens.append(palabra)
-                palabra = ''
-            if len(pila) > 0:
-                tokens.append(RPAREN)
-                sup_token = pila.pop()
-                sup_token.append(tokens)
-                tokens = sup_token
-            else:
-                print('Error con los paréntesis, por favor verificar.')
+        
         # PALABRAS
-        elif char.isspace():
+        if char.isspace():
             if palabra != '':
                 tokens.append(palabra)
                 palabra = ''
@@ -39,8 +21,24 @@ def lexer(input_string):
     if palabra:
         tokens.append(palabra)
 
-    if len(pila) > 0:
-        print('Error con los paréntesis')
-
-    print('TOKENS:', tokens)
+    if len(tokens) > 0:
+        print('TOKENS:', tokens)
+    
     return tokens
+
+def prueba (archivo): #Este método devuelve un solo string con todas las lineas de codigo
+    
+    archivo = open (archivo , 'r' )
+    
+    lineas=archivo.readlines() # Devuelvele una lista con todas las lineas de que tiene el archivo
+    
+    string_con_codigo = ""
+    
+    for linea in lineas:
+        lin_cod = lexer(linea)
+        if len(lin_cod)>0:
+            string_con_codigo+=" ".join(lin_cod)
+            
+    print(string_con_codigo)
+        
+prueba("prueba.txt")
