@@ -28,7 +28,7 @@ def lexer(input_string):
 
 def prueba (archivo): #Este método devuelve un solo string con todas las lineas de codigo
     
-    archivo = open (archivo , 'r' )
+    archivo = open (archivo ,'r')
     
     lineas=archivo.readlines() # Devuelvele una lista con todas las lineas de que tiene el archivo
     
