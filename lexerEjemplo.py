@@ -137,16 +137,31 @@ def prueba (archivo): #Este método devuelve un solo string con todas las lineas
     
     
     #Se unen las listas que hacen parte de un bloque
-    listas_comienzo_fin_bloque = []
+    listas_comienzo_bloque = []
     l = 0
     while l<len(lista_con_codigo):
         if lista_con_codigo[l][0] == "[":
-            listas_comienzo_fin_bloque.append(l)
-        elif (lista_con_codigo[l][(len(lista_con_codigo[l])-1)] == "]")and(not("proc" in lista_con_codigo[l])):
-            listas_comienzo_fin_bloque.append(l)
+            listas_comienzo_bloque.append(l)
         l+=1
-    print("\n")
-    print(listas_comienzo_fin_bloque)
+            
+    elementos_borrar = [] #Esta lista indica que elementos se eliminaran luego de juntar todas las lineas de un procedimiento
+    
+    for i in listas_comienzo_bloque:
+        j = i+1
+        corchete_detectado = False
+        
+        while (j<len(lista_con_codigo))and(not corchete_detectado):
+            
+            if ']' in lista_con_codigo[j]: #Este ciclo junta todas las listas que hacen parte de un solo procedimiento
+                corchete_detectado = True #Aun es necesario incluir el caso en el que hay subbloques dentro de un proc, el ciclo se detendría al ver el primer ']'
+                
+            elementos_borrar.append(lista_con_codigo[j])
+            lista_con_codigo[i].extend(lista_con_codigo[j])
+            j+=1    
+        
+    for elem in elementos_borrar: #Se eliminan las listas que fueron juntadas con otras
+        lista_con_codigo.remove(elem)
+        
     
     print("\n")
     print("CONTENIDO: ",lista_con_codigo)        
@@ -156,10 +171,15 @@ def prueba (archivo): #Este método devuelve un solo string con todas las lineas
             procedimientos.append(lista)
         elif '|' in lista:
             definicion_var.append(lista)
+        else:
+            bloques.append(lista)
     
     print("\n")
     print("DEF_VAR: ",definicion_var)
     print("\n")
     print("PROCS: ",procedimientos)
+    print("\n")
+    print("BLOQUES: ",bloques)
+    
         
 prueba("prueba.txt")
