@@ -114,7 +114,7 @@ def prueba (archivo): #Este método devuelve un solo string con todas las lineas
     l = 0
     while l<len(lista_con_codigo):
         if (len(lista_con_codigo[l])==1)and(lista_con_codigo[l][0]=='['):
-            listas_con_solo_corcheteR.append(l)
+            listas_con_solo_corcheteL.append(l)
         l+=1
             
     for i in listas_con_solo_corcheteL:
@@ -135,6 +135,18 @@ def prueba (archivo): #Este método devuelve un solo string con todas las lineas
         lista_con_codigo.remove(["["])
         elementos_borrar-=1
     
+    
+    #Se unen las listas que hacen parte de un bloque
+    listas_comienzo_fin_bloque = []
+    l = 0
+    while l<len(lista_con_codigo):
+        if lista_con_codigo[l][0] == "[":
+            listas_comienzo_fin_bloque.append(l)
+        elif (lista_con_codigo[l][(len(lista_con_codigo[l])-1)] == "]")and(not("proc" in lista_con_codigo[l])):
+            listas_comienzo_fin_bloque.append(l)
+        l+=1
+    print("\n")
+    print(listas_comienzo_fin_bloque)
     
     print("\n")
     print("CONTENIDO: ",lista_con_codigo)        

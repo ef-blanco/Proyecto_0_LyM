@@ -14,4 +14,10 @@ while : canMove : 1 inDir : # north do : [ move : 1 InDir : # north .
 ]
 ]
 
-| nom d c one |
+proc goWest [ 
+   if: canMove: 1 InDir: #west then: [move: 1 InDir: #west]  else: [nop .] ]
+
+[ 
+    goTo: 3 with: 3 .
+    putChips: 2 andBalloons: 1 .
+]
