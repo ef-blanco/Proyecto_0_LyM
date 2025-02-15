@@ -47,9 +47,10 @@ def prueba (archivo): #Este método devuelve un solo string con todas las lineas
     
     bloques = [] #Esta lista contendra las listas que contengan los carateres '['']' y que no contengan los caracteres de los otros casos
     
+    #CORREGIDO
     #Se unen los ']' que estan solos en una linea a la linea anterior
     
-    listas_con_solo_corcheteR = [] #Corregido
+    listas_con_solo_corcheteR = [] #Lista con indices de Listas con solo "]"
     l = 0
     while l<len(lista_con_codigo):
         if (len(lista_con_codigo[l]) == 1)and(lista_con_codigo[l][0]=="]"):
@@ -120,10 +121,6 @@ def prueba (archivo): #Este método devuelve un solo string con todas las lineas
         if (len(lista_con_codigo[l])==1)and(lista_con_codigo[l][0]=='['):
             listas_con_solo_corcheteR.append(l)
         l+=1
-        
-    #for lista in lista_con_codigo:
-        #if (len(lista) == 1)and(lista[0]=="["):
-            #listas_con_solo_corcheteR.append(lista_con_codigo.index(lista))
             
     elementos_borrar = [] #Esta lista indica que elementos se eliminaran luego de juntar todos los '[' solos con su linea siguiente
     
