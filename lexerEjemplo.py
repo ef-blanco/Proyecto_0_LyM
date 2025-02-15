@@ -113,7 +113,7 @@ def prueba (archivo): #Este método devuelve un solo string con todas las lineas
     #CORREGIR
     #Se unen los '[' que se encuentran solo en una linea a la linea siguiente
     
-    listas_con_solo_corcheteL = []
+    listas_con_solo_corcheteL = [] #Lista con indices de Listas con solo "["
     
     l = 0
     while l<len(lista_con_codigo):
