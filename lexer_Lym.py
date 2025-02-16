@@ -87,8 +87,8 @@ def lexer(nombreArchivo):
     archivo.close()
     return tokens
 
-alejo=lexer("prueba.txt")
-print(alejo)
+tokens=lexer("prueba.txt")
+print(tokens)
 
 def variable(tokens,i):
     listavar=[]
@@ -140,7 +140,7 @@ def procedimiento(tokens,i):
     
     return listaprocedimiento, indice
 
-def parser(tokens):
+def resultado(tokens):
     i=0
     total=[]
     while i < len(tokens):
@@ -157,7 +157,7 @@ def parser(tokens):
             i+=1
     return total
 
-lexer= parser(alejo)
+lexer= resultado(tokens)
 print(lexer)
 
 
