@@ -23,67 +23,142 @@
 # int score = 10;
 # [KEYWORD("int"), ID("score"), OP_ASSIGN:("="), INTEGER("10"), SEMICOLON(";")]
 
-DVARIA="|"
-LBLOQUE="["
-RBLOQUE="]"
-PROC="proc"
 
 def lexer(nombreArchivo):
     archivo = open (nombreArchivo , 'r' )
     
-    lineas=archivo.readlines() # Devuelvele una lista con todas las lineas de que tiene el archivo
+    lineas=archivo.readlines() 
     
-    tokens=[] # Es la lista temporal en la cual se guardan los casos del lenguaje: PROC, VARIABLES, BLOQUES
+    tokens=[] 
     
-    palabra="" # Se guardan las palabras necesarias para cada caso 
-    
-    listaTotal=[] # Indica una lista de listas que incluye cada caso donde existe un proceso principal
-    
-    anteriorVar=False # Indica si ya hay una decalración de variables antes
+    palabra="" 
 
     for linea in lineas: # Recorre cada linea del archivo
-
         for caracter in linea: # Revisar cada caracter en una linea
-
-            # Primer caso declaración de variables
-            if caracter in DVARIA:
-                if palabra:
+            if caracter=="|":
+                if palabra!= "":
                     tokens.append(palabra)
                     palabra=""
+                tokens.append(caracter)
 
-                if anteriorVar==False:
-                    if len(tokens)>0:
-                        listaTotal.append(tokens)
-                        tokens=[]
-                    if len(tokens)==0:
-                        tokens.append(caracter)
-                        anteriorVar=True
+            elif caracter=="[":
+                if palabra!= "":
+                    tokens.append(palabra)
+                    palabra=""
+                tokens.append(caracter)
+            
+            elif caracter=="]":
+                if palabra!= "":
+                    tokens.append(palabra)
+                    palabra=""
+                tokens.append(caracter)
 
-                elif anteriorVar==True:
-                    tokens.append(caracter)
-                    listaTotal.append(tokens)
-                    anteriorVar=False
-                    tokens=[]
+            elif caracter==".":
+                if palabra!= "":
+                    tokens.append(palabra)
+                    palabra=""
+                tokens.append(caracter)
 
-                
+            elif caracter==":":
+                if palabra!= "":
+                    tokens.append(palabra)
+                    palabra=""
+                tokens.append(caracter)
 
+            elif caracter=="=" and tokens[-1]==":":
+                if palabra!= "":
+                    tokens.append(palabra)
+                    palabra=""
+                del tokens[-1]
+                tokens.append(":=")
+            
+            elif caracter==",":
+                if palabra!= "":
+                    tokens.append(palabra)
+                    palabra=""
+                tokens.append(caracter)
 
-            # Caso para espacios
             elif caracter.isspace():
                 if palabra!= "":
-                    print("PALABRAS: ",palabra)
                     tokens.append(palabra)
                     palabra=""
 
             else: palabra+=caracter
-        
-
-    print("TOKENS: ",tokens)
-    print("PALABRAS: ",palabra)
-    print("CONTENIDO: ",listaTotal)
     archivo.close()
+    return tokens
 
-lexer("prueba.txt")
+alejo=lexer("prueba.txt")
+print(alejo)
+
+def variable(tokens,i):
+    listavar=[]
+    listavar.append(tokens[i])
+    indice=i+1
+    while indice < len(tokens) and tokens[indice] !="|":
+        listavar.append(tokens[indice])
+        indice+=1
+    if indice < len(tokens) and tokens[indice] =="|":
+        listavar.append(tokens[indice])
+        indice+=1
+    return listavar, indice 
+
+def bloque(tokens,i):
+    listabloque=[]
+    listabloque.append(tokens[i])
+    indice=i+1
+    while indice < len(tokens) and tokens[indice] != "]":
+        if tokens[indice]=="|":
+            listavariable, indice = variable(tokens,indice)
+            listabloque.append(listavariable)
+        elif tokens[indice] =="[":
+            sub, indice = bloque(tokens, indice)
+            listabloque.append(sub)
+        elif tokens[indice] == "proc":
+            listaprocedimiento, indice = procedimiento(tokens, indice)
+            listabloque.append(listaprocedimiento)
+        else: # TODO potencial error
+            listabloque.append(tokens[indice])
+            indice+=1
+        
+    if indice < len(tokens) and tokens[indice] =="]":
+        listabloque.append(tokens[indice])
+        indice+=1
+    
+    return listabloque, indice
+
+def procedimiento(tokens,i):
+    listaprocedimiento=[]
+    listaprocedimiento.append(tokens[i])
+    indice=i+1
+    while indice < len(tokens) and tokens[indice] != "[":
+        listaprocedimiento.append(tokens[indice])
+        indice+=1
+    
+    if indice < len(tokens) and tokens[indice] == "[":
+        listabloque, indice = bloque(tokens, indice)
+        listaprocedimiento.append(listabloque)
+    
+    return listaprocedimiento, indice
+
+def parser(tokens):
+    i=0
+    total=[]
+    while i < len(tokens):
+        if tokens[i] == "|":
+            listavariable, i = variable(tokens , i)
+            total.append(listavariable)
+        elif tokens[i] == "[":
+            listabloque, i = bloque(tokens,i)
+            total.append(listabloque)
+        elif tokens[i] == "proc":
+            listaprocedimiento, i = procedimiento(tokens, i)
+            total.append(listaprocedimiento)
+        else:
+            i+=1
+    return total
+
+lexer= parser(alejo)
+print(lexer)
 
 
     # Mover linea: ALT + FLECHA

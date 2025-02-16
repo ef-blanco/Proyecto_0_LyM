@@ -140,4 +140,6 @@ tokens = tokenize(code)       # Llama a la función 'tokenize' para convertir el
 parsed = parse_top(tokens)      # Llama a 'parse_top' para agrupar los tokens en una estructura anidada
 
 # Imprime la lista final resultante en una sola línea (sin saltos de línea adicionales)
-print(parsed, end="")         # Se usa 'end=""' para evitar saltos de línea en la impresión
+#       # Se usa 'end=""' para evitar saltos de línea en la impresión
+print(tokens)
+print(parsed)
