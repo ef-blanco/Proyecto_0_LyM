@@ -322,25 +322,39 @@ def verificar_Not(tokens,i):
     
 
 # Verificación de variables, bloques y procedimientos
-def validar_variable(tokens,i):
-    print(tokens[0])
-    print(tokens[-1])
-    if not(tokens[0] in DVARIABLE):
+
+def validar_variable(lista,i):
+    if not(lista[0] in DVARIABLE):
         return False
-    elif not(tokens[-1] in DVARIABLE):
+    elif not(lista[-1] in DVARIABLE):
         return False
-    elif not(tokens[1][0].islower()):
-        return False
-    elif not(tokens[4][0].islower()):
-        return False
+    j=1
+    while j < len(lista) -1:
+        print(lista[j])
+        if lista[j] != ",":
+            if not(lista[j][0].islower()):
+                return False
+        elif lista[j] ==",":
+            j+=1
+            continue
+        else:
+            return False
+        j+=1
     else:
-        return True
+        return True 
     
 def validar_bloque(tokens, i):
-    if not(tokens[0] in LBLOQUE) and not(tokens[-1] in RBLOQUE):
+    resultado=bool
+    if not(tokens[0] in LBLOQUE) or not(tokens[-1] in RBLOQUE):
         return False
+    j=1
+    while j < len(tokens)-1:
+        if tokens[j][0]=="|":
+            resultado=validar_variable(tokens[j], j)
+        j+=1
+
     else:
-        return True
+        return resultado
 
 def validar_procedimiento(tokens, i):
     return True
