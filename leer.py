@@ -1,4 +1,4 @@
-# Alejandro Hoyos - Proyecto 0 - Lexer para Robot
+# Alejandro Hoyos y Emmanuel Blanco- Proyecto 0 - Lexer para Robot
 
 # Debemos decir si el programa corresponde al lenguaje del robot o no
 

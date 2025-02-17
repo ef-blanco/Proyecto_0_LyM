@@ -4,6 +4,7 @@ DVARIABLE="|"
 LBLOQUE="["
 RBLOQUE="]"
 VARIABLES={}
+NOMBRES_VARIABLES = [] #Lista con los nombres de las variables
 FUNCIONES={}
 CONSTANTES=["#chips", "#balloons"]
 CONDICIONES=["facing", "canPut", "canPick", "canMove", "canJump"]
@@ -12,6 +13,9 @@ SEGUIDOINSTRUCCIONES=["ofType", "inDir", "toThe", "with"]
 DIRECCIONES=["#left","#right", "#front", "#back", "around"]
 BRUJULA=["#north", "#south", "#west", "#east"]
 NUMEROS=[]
+PALABRAS_RESERVADAS = ["|","[","]","#chips", "#balloons","facing", "canPut", "canPick", "canMove", "canJump",
+                       "goto", "move","turn", "face", "put", "pick", "move", "jump", "nop","ofType", "inDir",
+                       "toThe", "with","#left","#right", "#front", "#back", "around", "#north", "#south", "#west", "#east"]
 
 
 # Verificar cada instrucción o cada variable caracter por caracter
@@ -21,13 +25,13 @@ def verificar_goto(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "with"):
         return False
     elif not(tokens[4] == ":"):
         return False
-    elif not(tokens[5] in NUMEROS):
+    elif not((tokens[5] in NUMEROS)or(tokens[5] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[6]=="."):
         return False
@@ -39,7 +43,7 @@ def verificar_move(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "."):
         return False
@@ -75,7 +79,7 @@ def verificar_putOfType(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "ofType"):
         return False
@@ -93,7 +97,7 @@ def verificar_pickOfType(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "ofType"):
         return False
@@ -106,12 +110,12 @@ def verificar_pickOfType(tokens,i):
     else:
         return True
     
-def verificar_modeToThe(tokens,i):
+def verificar_moveToThe(tokens,i): #Cambio: el nombre de la función era modeToThe
     if not(tokens[0] == "move"):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "toThe"):
         return False
@@ -129,7 +133,7 @@ def verificar_moveInDir(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "inDir"):
         return False
@@ -147,7 +151,7 @@ def verificar_jumpToThe(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "inDir"):
         return False
@@ -165,7 +169,7 @@ def verificar_jumpInDir(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "inDir"):
         return False
@@ -205,7 +209,7 @@ def verificar_canPutOfType(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "ofType"):
         return False
@@ -223,7 +227,7 @@ def verificar_canPickOfType(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "ofType"):
         return False
@@ -241,7 +245,7 @@ def verificar_canMoveInDir(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "inDir"):
         return False
@@ -259,7 +263,7 @@ def verificar_canJumpInDir(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "inDir"):
         return False
@@ -277,7 +281,7 @@ def verificar_canMoveToThe(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "toThe"):
         return False
@@ -295,7 +299,7 @@ def verificar_canJumpToThe(tokens,i):
         return False
     elif not(tokens[1] == ":"):
         return False
-    elif not(tokens[2] in NUMEROS):
+    elif not((tokens[2] in NUMEROS)or(tokens[2] in NOMBRES_VARIABLES)): #Cambio:Se verifica que el valor también pueda estar en una variable
         return False
     elif not(tokens[3] == "toThe"):
         return False
@@ -332,7 +336,7 @@ def validar_variable(lista,i):
     while j < len(lista) -1:
         print(lista[j])
         if lista[j] != ",":
-            if not(lista[j][0].islower()):
+            if not(lista[j][0].islower()): #Falta verificar que la palabra no sea reservada
                 return False
         elif lista[j] ==",":
             j+=1
@@ -357,7 +361,42 @@ def validar_bloque(tokens, i):
         return resultado
 
 def validar_procedimiento(tokens, i):
-    return True
+    result = True
+    if not(tokens[0] == "proc"):
+        result = False
+    
+    elif not(tokens[1] in PALABRAS_RESERVADAS): #Revisa que el nombre del proc no esté dentor de las palabras reservadas
+        result = False
+    
+    parametros = 0 #Lleva el conteo de cuantos parametros tiene el procedimiento
+    if tokens[2] == ":": #Si llega a haber un parametro...
+        parametros+=1
+        if not((tokens[3] in NUMEROS)or(tokens[3] in NOMBRES_VARIABLES)): #Se espera que el parametro se un numero o variable
+            result = False
+        
+        if tokens[4]=="and": #Si llega a haber otro parametro...
+            parametros+=1
+            if not(tokens[5] == ":"): #Deben haber : despues del and
+                result = False
+            if not((tokens[6] in NUMEROS)or(tokens[6] in NOMBRES_VARIABLES)): #Se espera que el parametro se un numero o variable
+                result = False
+    
+    pos_actual = 2          
+    if parametros>0: #Estos condicionales ayudan a recuperar la posicion en la que esta independiente de si hubieron parametros o no
+        if parametros == 1:
+            pos_actual = 4
+        else:
+            pos_actual = 7
+            
+    verificacionBloque = True #El bloque del procedimiento tendra que ser revisado por validar_procedimiento
+    if isinstance(tokens[pos_actual],list): #Revise si en las posicion de la lista del proc se tiene una lista
+        verificacionBloque = validar_bloque(tokens[pos_actual],i) #Manda al bloque a revision
+    else:
+        result = False
+    
+    result = result and verificacionBloque #Se valida que el procedimiento esta bien si su bloque tambien lo esta
+        
+    return result
     
 def validar(tokens):
     i=0
