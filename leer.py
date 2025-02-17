@@ -87,8 +87,8 @@ def lexer(nombreArchivo):
     archivo.close()
     return tokens
 
-tokens=lexer("prueba.txt")
-print(tokens)
+# tokens=lexer("prueba.txt")
+# print(tokens)
 
 def variable(tokens,i):
     listavar=[]
@@ -111,7 +111,7 @@ def bloque(tokens,i):
             listavariable, indice = variable(tokens,indice)
             listabloque.append(listavariable)
         elif tokens[indice] =="[":
-            sub, indice = bloque(tokens, indice)
+            sub, indice = bloque(tokens, indice) 
             listabloque.append(sub)
         elif tokens[indice] == "proc":
             listaprocedimiento, indice = procedimiento(tokens, indice)
@@ -157,8 +157,8 @@ def resultado(tokens):
             i+=1
     return total
 
-lexer= resultado(tokens)
-print(lexer)
+# lexer= resultado(tokens)
+# print(lexer)
 
 
     # Mover linea: ALT + FLECHA
