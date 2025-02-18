@@ -1,6 +1,5 @@
 proc goNorth  [ 
+    [|nom x y one|]
+    [| c , b |]
     while: canMove: 1 inDir: #north do: [ move: 1 InDir: #north . ] 
 ]
-
-proc goWest [ 
-   if: canMove: 1 InDir: #west then: [move: 1 InDir: #west]  else: [nop .]]

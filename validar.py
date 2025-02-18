@@ -323,6 +323,7 @@ def verificar_Not(tokens,i):
 
 # Verificación de variables, bloques y procedimientos
 
+
 def validar_variable(lista,i):
     if not(lista[0] in DVARIABLE):
         return False
@@ -330,7 +331,6 @@ def validar_variable(lista,i):
         return False
     j=1
     while j < len(lista) -1:
-        print(lista[j])
         if lista[j] != ",":
             if not(lista[j][0].islower()):
                 return False
@@ -342,25 +342,44 @@ def validar_variable(lista,i):
         j+=1
     else:
         return True 
-    
+
+
 def validar_bloque(tokens, i):
-    resultado=bool
+    resultado=True
     if not(tokens[0] in LBLOQUE) or not(tokens[-1] in RBLOQUE):
         return False
-    j=1
-    while j < len(tokens)-1:
-        if tokens[j][0]=="|":
-            resultado=validar_variable(tokens[j], j)
+    j=0
+    while j < len(tokens):
+        lista= tokens[j]
+        if isinstance(lista, list):
+                if tokens[j][0]=="|":
+                    return validar_variable(tokens[j],j)
+                elif tokens[j][0] =="[":
+                    return validar_bloque(tokens[j],j)
         j+=1
-
     else:
         return resultado
 
 def validar_procedimiento(tokens, i):
-    return True
+
+    resultado=True
+    
+    if not(tokens[0] == "proc"):
+        return False
+    j=0
+    while j < len(tokens):
+        lista=tokens[j]
+        if isinstance(lista, list):
+            if tokens[j][0]=="[":
+                return validar_bloque(tokens[j],j)
+        j+=1
+
+    else:
+        return resultado
     
 def validar(tokens):
     i=0
+    resultado=True
     while i < len(tokens):
         
         j=0
@@ -383,11 +402,11 @@ def validar(tokens):
         i+=1
     return resultado
 
-# lista=leer.lexer("pruebaVariables.txt")
-# print(lista)
-# arroas=leer.resultado(lista)
-# print(arroas)
+lista=leer.lexer("./ejemplosCodigo/proc.txt")
+print(lista)
+arroas=leer.resultado(lista)
+print(arroas)
 
-# respuesta=validar(arroas)
-# print(respuesta)
+respuesta=validar(arroas)
+print(respuesta)
         

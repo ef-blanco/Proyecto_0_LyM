@@ -5,7 +5,7 @@ def mostrar_menu():
     print("\n=============================================")
     print("    Sistema para procesar código de Robot")
     print("=============================================")
-    print("1. Ingresar nombre de archivo")
+    print("1. Escoger el archivo a revisar")
     print("2. Verificar el archivo")
     print("3. Salir")
     print("=============================================")
@@ -14,7 +14,7 @@ def main():
     while True:
         mostrar_menu()
 
-        opcion = input("Seleccione una opción (1 o 2): ").strip()
+        opcion = input("Seleccione una opción (1 o 2 o 3): ").strip()
 
         if opcion == "1":
             print("1) Probar con código completo")

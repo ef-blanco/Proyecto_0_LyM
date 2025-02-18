@@ -1,6 +1,9 @@
 |nom x y one|
 
 [ 
-    |c, b| 
+    |c, b|
+    [
+
     |mar t v two|
+    ] 
 ]
