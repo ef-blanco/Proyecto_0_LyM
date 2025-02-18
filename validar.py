@@ -458,11 +458,6 @@ def validar_bloque(tokens, i)->bool:
                 
     return validacion_instrucciones and resultado
                     
-            
-            
-    
-    
-    
 
 def validar_procedimiento(tokens, i)->bool:
     result = True
