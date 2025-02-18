@@ -322,6 +322,15 @@ def verificar_Not(tokens,i)->bool:
     else:
         return True
 
+def verificar_asignacion(tokens,i)->bool: #metodo añadido
+    if not(tokens[0] in NOMBRES_VARIABLES):
+        return False
+    elif not(tokens[1] == ":=" ):
+        return False
+    elif not((tokens[3] in NUMEROS) or (tokens[3] in NOMBRES_VARIABLES)):
+        return False
+    else:
+        return True
     
     
 
@@ -420,8 +429,8 @@ def validar_bloque(tokens, i)->bool:
             for indice in instruc_Tipo.keys(): #Se revisa cada instruccion y se va modificando un booleano que determina si todas las instrucciones fueron correctas
                 tipo = instruc_Tipo[indice]
                 match tipo:
-                    case "ASIGNACION":
-                        validacion_instrucciones = validacion_instrucciones and verificarAsignacion
+                    case "ASIGNACION": 
+                        validacion_instrucciones = validacion_instrucciones and verificar_asignacion(lista_instrucciones[indice],indice) #REVISAR
                         
                     case "GOTO":
                         validacion_instrucciones = validacion_instrucciones and verificar_goto(lista_instrucciones[indice],indice)
