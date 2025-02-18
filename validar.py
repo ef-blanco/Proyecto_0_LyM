@@ -364,6 +364,7 @@ def validar_bloque(tokens, i)->bool:
     lista_instrucciones = [] #Tendra en listas las intrucciones a revisar
     validacion_instrucciones = True
     punto_detectado = False
+    nueva_instruc = []
     j=1
     while j < len(tokens)-1: #La condicion tal vez deba ser j < len(tokens)-2
         if isinstance(tokens[j],list):
@@ -375,9 +376,9 @@ def validar_bloque(tokens, i)->bool:
         
         
         else:
-            nueva_instruc = []
+            
             nueva_instruc.append(tokens[j])
-            if tokens == ".":
+            if tokens[j] == ".":
                 punto_detectado = True
                 
             if punto_detectado: #Si se detecta un punto significa que ya termino una instruccion
@@ -387,8 +388,8 @@ def validar_bloque(tokens, i)->bool:
             
         j+=1
         
-        instruc_Tipo = {} #Guarda indice_insturccion (llave): tipo (valor)
-        for instruc in lista_instrucciones:
+    instruc_Tipo = {} #Guarda indice_insturccion (llave): tipo (valor)
+    for instruc in lista_instrucciones:
             if ":=" in instruc:
                 instruc_Tipo[lista_instrucciones.index(instruc)] = "ASIGNACION"
             
@@ -473,7 +474,7 @@ def validar_procedimiento(tokens, i)->bool:
     if not(tokens[0] == "proc"):
         result = False
     
-    elif not(tokens[1] in PALABRAS_RESERVADAS): #Revisa que el nombre del proc no esté dentor de las palabras reservadas
+    elif tokens[1] in PALABRAS_RESERVADAS: #Revisa que el nombre del proc no esté dentor de las palabras reservadas
         result = False
     
     parametros = 0 #Lleva el conteo de cuantos parametros tiene el procedimiento
@@ -530,7 +531,7 @@ def validar(tokens):
         i+=1
     return resultado
 
-lista=leer.lexer("pruebaVariables.txt")
+lista=leer.lexer("prueba.txt")
 print(lista)
 arroas=leer.resultado(lista)
 print(arroas)
