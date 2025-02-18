@@ -383,11 +383,11 @@ def validar(tokens):
         i+=1
     return resultado
 
-lista=leer.lexer("pruebaVariables.txt")
-print(lista)
-arroas=leer.resultado(lista)
-print(arroas)
+# lista=leer.lexer("pruebaVariables.txt")
+# print(lista)
+# arroas=leer.resultado(lista)
+# print(arroas)
 
-respuesta=validar(arroas)
-print(respuesta)
+# respuesta=validar(arroas)
+# print(respuesta)
         

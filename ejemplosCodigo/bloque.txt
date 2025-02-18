@@ -1,0 +1,4 @@
+[ 
+    goTo: 3 with: 3 .
+    putChips: 2 andBalloons: 1 .
+]
